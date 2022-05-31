@@ -51,3 +51,17 @@ print(result)
 # 3. Find elements that are in the first two lists but not in third
 result = list(set(result) - set(list_3))
 print(result)
+
+
+"""
+is_digit = True
+while is_digit:
+    x = input()
+    is_digit = x.isdigit()
+"""
+
+"""
+for x in my_list_01:
+    if x in my_list_02 and x not in my_list_03:
+        print(x)
+"""

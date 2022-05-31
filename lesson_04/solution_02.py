@@ -3,7 +3,7 @@
 которые одинаково читаются слева направо и справа налево
 """
 
-my_string = input()
+my_string = input().replace(" ", "")
 
 if my_string == my_string[::-1]:
     print("yes")
