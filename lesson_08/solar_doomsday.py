@@ -15,19 +15,32 @@ would return [9, 1, 1, 1].
 """
 
 
-def solution(area):
+def solution(area: int):
     result_squares = []
     while area > 0:
         biggest_area = int(area ** 0.5) ** 2
         result_squares.append(biggest_area)
         area -= biggest_area
-
     return result_squares
+
+
+def solution_rec(area: int):
+    result_squares = []
+    if area <= 0:
+        return result_squares
+    else:
+        biggest_area = int(area ** 0.5) ** 2
+        result_squares.append(biggest_area)
+        result_squares += solution_rec(area - biggest_area)
+        return result_squares
 
 
 if __name__ == "__main__":
     print(solution(12))
-    print(solution(120))
     print(solution(777))
     print(solution(15324))
-    print(solution(892))
+
+    print("Recursion solution:")
+    print(solution_rec(12))
+    print(solution_rec(777))
+    print(solution_rec(15324))
