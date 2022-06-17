@@ -17,6 +17,8 @@ class MyDateTime(NewTime):
 
     @staticmethod
     def seconds_to_time(seconds: int) -> NewTime:
+        year = seconds / 60 / 60 / 24 / 365.25
+        day = seconds // (60 * 60 * 24)
         hours = seconds // (60 * 60)
         minutes = (seconds % (60 * 60)) // 60
         seconds = seconds % 60
