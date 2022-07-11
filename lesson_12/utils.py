@@ -8,7 +8,7 @@ DB_ECHO = True
 
 
 def setup_db_engine() -> Engine:
-    return create_engine(f"sqlite:////{DB_PATH}", echo=DB_ECHO)
+    return create_engine(f"sqlite:///{DB_PATH}", echo=DB_ECHO)
 
 
 def create_database_if_not_exists(engine: Engine):
