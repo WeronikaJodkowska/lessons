@@ -1,5 +1,3 @@
-import json
-
 from sqlalchemy import Integer, String, Column, ForeignKey, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -16,18 +14,6 @@ class User(Base):
     profile = relationship("Profile", back_populates="user", uselist=False)
     addresses = relationship("Address", back_populates="user")
     purchases = relationship("Purchase", back_populates="user")
-
-    def __str__(self):
-        return f"{self.id},{self.email}"
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "email": self.email
-        }
-
-    def json(self):
-        return json.dumps(self.serialize())
 
 
 class Address(Base):

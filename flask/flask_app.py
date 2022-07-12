@@ -1,3 +1,4 @@
+import json
 import logging
 
 from flask import Flask, request, Response
@@ -12,27 +13,29 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 
 
-def dict_to_str(data: dict) -> str:
-    result = []
-    for key, value in data.items():
-        result.append(f"{key}: {value}")
-    return ", ".join(result)
-
-
 @app.route("/", methods=["GET"])
 def index():
-    return Response("Index page", status=200)
+    data = {"message": "Index page"}
+    return Response(json.dumps(data), content_type="application/json")
 
 
 @app.route("/user/", methods=["GET", "POST"])
 def user():
     if request.method == "POST":
-        new_user = User(email=request.form.get("email"), password=request.form.get("password"))
+        data = request.json
+        if not data.get("email") or not data.get("password"):
+            return Response(status=400)
+
+        new_user = User(email=data.get("email"), password=data.get("password"))
         app.current_session.add(new_user)
         app.current_session.commit()
-        return Response(str(new_user), status=201)
-    data = map(str, app.current_session.query(User).all())
-    return Response("\n".join(data))
+
+        return Response(new_user.json(), status=201, content_type="application/json")
+
+    data = {"users": list(
+        map(lambda x: x.serialize(), app.current_session.query(User).all())
+    )}
+    return Response(json.dumps(data), content_type="application/json")
 
 
 if __name__ == "__main__":
